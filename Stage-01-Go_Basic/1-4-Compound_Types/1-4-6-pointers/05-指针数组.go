@@ -15,7 +15,7 @@ func main() {
 	println()
 
 	for i := 0; i < len(arr); i++ {
-		fmt.Printf("指针数组中第 %d 个指针变量指向的值为：%d\n", i, *arr[i])
+		fmt.Printf("指针数组中第 %d 个指针变量指向的值为：%d\n", i+1, *arr[i])
 	}
 	println()
 
