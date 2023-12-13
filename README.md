@@ -1,3 +1,3 @@
-# Go Learning
+# Go Programming
 
-- Learn Go happily
+- Happy Programming with Go
