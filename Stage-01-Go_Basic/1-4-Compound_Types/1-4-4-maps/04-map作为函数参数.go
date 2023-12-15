@@ -20,3 +20,5 @@ func main() {
 	DeleteMap(m) // 在函数中删除 map 的值后会影响原 map，类似于 slice，因为内存地址都是一样的，删除的都是同一内存指向的数据
 	fmt.Println("删除后的 map 为：", m)
 }
+
+// map 本质是个结构体指针类型，所以把 map 作为参数也可以修改元素
