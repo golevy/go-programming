@@ -95,6 +95,23 @@ func addPerson() {
 
 	// 将联系人的信息存储到切片中
 	personList = append(personList, Person{userName: name, addressPhone: addressPhone})
+
+	// 展示切片中存储的联系人信息
+	showPersonList()
+}
+
+func showPersonList() {
+	if len(personList) == 0 {
+		fmt.Println("暂时没有联系人信息")
+	} else {
+		for _, value := range personList {
+			fmt.Println("姓名：", value.userName)
+			for k, v := range value.addressPhone {
+				fmt.Println("电话类型：", k)
+				fmt.Println("电话号码：", v)
+			}
+		}
+	}
 }
 
 func main() {
