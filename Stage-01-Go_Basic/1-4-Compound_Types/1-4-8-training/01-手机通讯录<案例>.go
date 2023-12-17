@@ -98,6 +98,7 @@ func addPerson() {
 
 	// 展示切片中存储的联系人信息
 	showPersonList()
+	println()
 }
 
 func showPersonList() {
@@ -115,5 +116,7 @@ func showPersonList() {
 }
 
 func main() {
-	scanNum()
+	for {
+		scanNum()
+	}
 }
