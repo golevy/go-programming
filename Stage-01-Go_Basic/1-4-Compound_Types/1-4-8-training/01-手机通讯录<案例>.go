@@ -47,7 +47,7 @@ func switchType(n int) {
 
 func removePerson() {
 	var name string
-	var index = 1 // 记录要删除的联系人信息在切片中的下标
+	var index = -1 // 记录要删除的联系人信息在切片中的下标
 	fmt.Println("请输入要删除的联系人姓名：")
 	_, err4 := fmt.Scan(&name)
 	if err4 != nil {
@@ -68,6 +68,8 @@ func removePerson() {
 		personList = append(personList[:index], personList[index+1:]...) // append() 函数第二个参数如果是切片，后面需要加...
 		// 由于 append 的第二个参数需要单个元素，而不是切片，所以当你需要将一个切片的元素追加到另一个切片时，你需要使用 ... 来展开切片中的元素
 	}
+
+	showPersonList()
 }
 
 func addPerson() {
@@ -124,7 +126,6 @@ func addPerson() {
 
 	// 展示切片中存储的联系人信息
 	showPersonList()
-	println()
 }
 
 func showPersonList() {
@@ -132,6 +133,7 @@ func showPersonList() {
 		fmt.Println("暂时没有联系人信息")
 	} else {
 		for _, value := range personList {
+			fmt.Println("通讯录信息如下：")
 			fmt.Println("姓名：", value.userName)
 			for k, v := range value.addressPhone {
 				fmt.Println("电话类型：", k)
