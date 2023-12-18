@@ -34,13 +34,39 @@ func switchType(n int) {
 		// 添加联系人
 		addPerson()
 	case 2:
-	// 删除联系人
+		// 删除联系人
+		removePerson()
 	case 3:
 	// 查询联系人
 	case 4:
 	// 编辑联系人
 	default:
 		fmt.Println("请输入正确的指令！")
+	}
+}
+
+func removePerson() {
+	var name string
+	var index = 1 // 记录要删除的联系人信息在切片中的下标
+	fmt.Println("请输入要删除的联系人姓名：")
+	_, err4 := fmt.Scan(&name)
+	if err4 != nil {
+		fmt.Println(err4)
+		return
+	}
+
+	// 判断切片中是否存储了要删除的联系人信息
+	for i := 0; i < len(personList); i++ {
+		if personList[i].userName == name {
+			index = 1
+			break
+		}
+	}
+
+	if index != -1 {
+		// 切片的截取操作，相当于将用户输入的 name 给排除了
+		personList = append(personList[:index], personList[index+1:]...) // append() 函数第二个参数如果是切片，后面需要加...
+		// 由于 append 的第二个参数需要单个元素，而不是切片，所以当你需要将一个切片的元素追加到另一个切片时，你需要使用 ... 来展开切片中的元素
 	}
 }
 
