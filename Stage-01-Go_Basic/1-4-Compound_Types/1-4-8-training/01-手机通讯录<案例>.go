@@ -37,39 +37,13 @@ func switchType(n int) {
 		// 删除联系人
 		removePerson()
 	case 3:
-	// 查询联系人
+		// 查询联系人
+		findPerson()
 	case 4:
 	// 编辑联系人
 	default:
 		fmt.Println("请输入正确的指令！")
 	}
-}
-
-func removePerson() {
-	var name string
-	var index = -1 // 记录要删除的联系人信息在切片中的下标
-	fmt.Println("请输入要删除的联系人姓名：")
-	_, err4 := fmt.Scan(&name)
-	if err4 != nil {
-		fmt.Println(err4)
-		return
-	}
-
-	// 判断切片中是否存储了要删除的联系人信息
-	for i := 0; i < len(personList); i++ {
-		if personList[i].userName == name {
-			index = 1
-			break
-		}
-	}
-
-	if index != -1 {
-		// 切片的截取操作，相当于将用户输入的 name 给排除了
-		personList = append(personList[:index], personList[index+1:]...) // append() 函数第二个参数如果是切片，后面需要加...
-		// 由于 append 的第二个参数需要单个元素，而不是切片，所以当你需要将一个切片的元素追加到另一个切片时，你需要使用 ... 来展开切片中的元素
-	}
-
-	showPersonList()
 }
 
 func addPerson() {
@@ -126,6 +100,64 @@ func addPerson() {
 
 	// 展示切片中存储的联系人信息
 	showPersonList()
+}
+
+func removePerson() {
+	var name string
+	var index = -1 // 记录要删除的联系人信息在切片中的下标
+	fmt.Println("请输入要删除的联系人姓名：")
+	_, err4 := fmt.Scan(&name)
+	if err4 != nil {
+		fmt.Println(err4)
+		return
+	}
+
+	// 判断切片中是否存储了要删除的联系人信息
+	for i := 0; i < len(personList); i++ {
+		if personList[i].userName == name {
+			index = 1
+			break
+		}
+	}
+
+	if index != -1 {
+		// 切片的截取操作，相当于将用户输入的 name 给排除了
+		personList = append(personList[:index], personList[index+1:]...) // append() 函数第二个参数如果是切片，后面需要加...
+		// 由于 append 的第二个参数需要单个元素，而不是切片，所以当你需要将一个切片的元素追加到另一个切片时，你需要使用 ... 来展开切片中的元素
+	}
+
+	showPersonList()
+}
+
+func findPerson() {
+	// 1. 输入要查询的联系人姓名
+	var name string
+	var index = -1 // 记录找到的联系人信息在切片中的下标
+	fmt.Println("请输入要查询的联系人姓名：")
+	_, err5 := fmt.Scan(&name)
+	if err5 != nil {
+		fmt.Println(err5)
+		return
+	}
+
+	// 2. 根据输入的联系人姓名，查找对应的联系信息
+	for key, value := range personList {
+		if value.userName == name {
+			index = key
+			fmt.Println("联系人姓名：", value.userName)
+
+			for k, v := range value.addressPhone {
+				fmt.Printf("电话类型：%s\n", k)
+				fmt.Printf("电话号码：%s\n", v)
+			}
+		}
+	}
+
+	// 3. 打印输出结果
+	if index == -1 {
+		fmt.Println("没有找到该联系人信息！！！")
+	}
+
 }
 
 func showPersonList() {
