@@ -4,12 +4,12 @@ import (
 	"fmt"
 )
 
-type Person struct {
+type Contact struct {
 	userName     string
 	addressPhone map[string]string // key 表示电话的类型（公司/个人等），value：电话
 }
 
-var personList = make([]Person, 0) // 定义通讯录切片
+var contactList = make([]Contact, 0) // 定义通讯录切片
 
 // 界面操作提示
 func scanNum() {
@@ -32,21 +32,22 @@ func switchType(n int) {
 	switch n {
 	case 1:
 		// 添加联系人
-		addPerson()
+		addContact()
 	case 2:
 		// 删除联系人
-		removePerson()
+		removeContact()
 	case 3:
 		// 查询联系人
-		findPerson()
+		findContact()
 	case 4:
-	// 编辑联系人
+		// 编辑联系人
+		editContact()
 	default:
 		fmt.Println("请输入正确的指令！")
 	}
 }
 
-func addPerson() {
+func addContact() {
 	var name string
 	var address string
 	var phone string
@@ -96,13 +97,13 @@ func addPerson() {
 	}
 
 	// 将联系人的信息存储到切片中
-	personList = append(personList, Person{userName: name, addressPhone: addressPhone})
+	contactList = append(contactList, Contact{userName: name, addressPhone: addressPhone})
 
 	// 展示切片中存储的联系人信息
-	showPersonList()
+	showContactList()
 }
 
-func removePerson() {
+func removeContact() {
 	var name string
 	var index = -1 // 记录要删除的联系人信息在切片中的下标
 	fmt.Println("请输入要删除的联系人姓名：")
@@ -113,8 +114,8 @@ func removePerson() {
 	}
 
 	// 判断切片中是否存储了要删除的联系人信息
-	for i := 0; i < len(personList); i++ {
-		if personList[i].userName == name {
+	for i := 0; i < len(contactList); i++ {
+		if contactList[i].userName == name {
 			index = 1
 			break
 		}
@@ -122,14 +123,14 @@ func removePerson() {
 
 	if index != -1 {
 		// 切片的截取操作，相当于将用户输入的 name 给排除了
-		personList = append(personList[:index], personList[index+1:]...) // append() 函数第二个参数如果是切片，后面需要加...
+		contactList = append(contactList[:index], contactList[index+1:]...) // append() 函数第二个参数如果是切片，后面需要加...
 		// 由于 append 的第二个参数需要单个元素，而不是切片，所以当你需要将一个切片的元素追加到另一个切片时，你需要使用 ... 来展开切片中的元素
 	}
 
-	showPersonList()
+	showContactList()
 }
 
-func findPerson() {
+func findContact() *Contact {
 	// 1. 输入要查询的联系人姓名
 	var name string
 	var index = -1 // 记录找到的联系人信息在切片中的下标
@@ -137,11 +138,11 @@ func findPerson() {
 	_, err5 := fmt.Scan(&name)
 	if err5 != nil {
 		fmt.Println(err5)
-		return
+		return nil
 	}
 
 	// 2. 根据输入的联系人姓名，查找对应的联系信息
-	for key, value := range personList {
+	for key, value := range contactList {
 		if value.userName == name {
 			index = key
 			fmt.Println("联系人姓名：", value.userName)
@@ -156,15 +157,87 @@ func findPerson() {
 	// 3. 打印输出结果
 	if index == -1 {
 		fmt.Println("没有找到该联系人信息！！！")
+		return nil
+	} else {
+		return &contactList[index]
 	}
-
 }
 
-func showPersonList() {
-	if len(personList) == 0 {
+func editContact() {
+	// 1. 查找到要编辑的联系人信息
+	var name string              // 存储新的联系人姓名
+	var num int                  // 存储需要修改的数据的数字编号
+	var menu = make([]string, 0) // 保存电话类型，方便后面修改
+	var pNum int                 // 编辑的电话类型编号
+	var phone string             // 存储新的电话号码
+	var p *Contact
+	p = findContact()
+
+	// 2. 编辑联系人信息
+	if p != nil {
+		for {
+			fmt.Println("编辑联系人姓名请按：5，编辑电话请按：6，退出请按：7")
+			_, err := fmt.Scan(&num)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+
+			switch num {
+			case 5:
+				// 修改联系人姓名
+				fmt.Println("请输入新的姓名：")
+				_, err = fmt.Scan(&name)
+				if err != nil {
+					fmt.Println(err)
+					return
+				}
+				p.userName = name
+				showContactList()
+			case 6:
+				// 编辑联系人电话
+				var j int
+				for key, value := range p.addressPhone {
+					fmt.Println("编辑（", key, "）", value, "请按：", j)
+					menu = append(menu, key)
+					j++
+				}
+
+				fmt.Println("请输入编辑号码的类型：")
+				_, err = fmt.Scan(&pNum)
+				if err != nil {
+					fmt.Println(err)
+					return
+				}
+
+				for index, value := range menu {
+					if index == pNum {
+						fmt.Println("请输入新的电话号码：")
+						_, err = fmt.Scan(&phone)
+						if err != nil {
+							fmt.Println(err)
+							return
+						}
+						p.addressPhone[value] = phone
+					}
+				}
+
+			}
+
+			if num == 7 {
+				break
+			}
+		}
+	} else {
+		fmt.Println("没有找到要编辑的联系人信息！！！")
+	}
+}
+
+func showContactList() {
+	if len(contactList) == 0 {
 		fmt.Println("暂时没有联系人信息")
 	} else {
-		for _, value := range personList {
+		for _, value := range contactList {
 			fmt.Println("通讯录信息如下：")
 			fmt.Println("姓名：", value.userName)
 			for k, v := range value.addressPhone {
