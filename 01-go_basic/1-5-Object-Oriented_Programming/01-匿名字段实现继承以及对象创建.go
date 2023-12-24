@@ -9,7 +9,7 @@ type Person struct {
 }
 
 type Student struct {
-	Person // 匿名字段，只有类型，没有成员的名字
+	Person // 使用 Person 类型作为匿名字段，只有类型，没有成员的名字
 	score  float64
 }
 
