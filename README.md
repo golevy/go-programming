@@ -1,3 +1,3 @@
 # Go Programming
 
-- Happy Programming with Go
+Happy programming with Go.
