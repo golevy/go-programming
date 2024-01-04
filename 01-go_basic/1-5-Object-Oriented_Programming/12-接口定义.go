@@ -27,13 +27,13 @@ func (t *TeacherA) SayHello() {
 }
 
 func main() {
-	var student StudentE
-	var teacher TeacherA
-	var person Greeter
+	var studentE StudentE
+	var teacherA TeacherA
+	var eachPerson Greeter
 
-	person = &student
-	person.SayHello()
+	eachPerson = &studentE
+	eachPerson.SayHello()
 
-	person = &teacher
-	person.SayHello()
+	eachPerson = &teacherA
+	eachPerson.SayHello()
 }
