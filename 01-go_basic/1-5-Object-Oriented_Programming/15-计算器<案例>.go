@@ -53,5 +53,5 @@ func main() {
 	num1 := operator.CreateOperator("+", 20, 15)
 	fmt.Println("加法计算结果为", num1)
 	num2 := operator.CreateOperator("-", 20, 15)
-	fmt.Println("加法计算结果为", num2)
+	fmt.Println("减法计算结果为", num2)
 }
