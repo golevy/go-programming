@@ -7,7 +7,7 @@ import (
 
 func main() {
 	// Create file
-	file, err := os.Create("/Users/levylv/desktop/a.txt")
+	file, err := os.Create("/Users/levylv/Desktop/a.txt")
 
 	if err != nil {
 		fmt.Println(err)
