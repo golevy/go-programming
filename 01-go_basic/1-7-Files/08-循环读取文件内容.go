@@ -19,7 +19,7 @@ func main() {
 		}
 	}(file)
 
-	buffer := make([]byte, 10)
+	buffer := make([]byte, 10) // "buffer"（缓冲区）是一个常用术语，用来指代一个临时的存储区，它用于在数据在两个地方之间传输时暂存这些数据
 
 	for {
 		n, err := file.Read(buffer)
